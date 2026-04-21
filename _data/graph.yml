@@ -1,0 +1,64 @@
+nodes:
+  - id: BCD
+    label: "mdn/browser-compat-data"
+    category: toolchain
+  - id: bcdresults
+    label: "openwebdocs/mdn-bcd-results"
+  - id: BCDCollector
+    label: BCD Collector
+  - id: WebFeatures
+    label: Web Features
+    category: toolchain
+  - id: webPlatformDX
+    label: "web-platform-dx/web-features"
+  - id: Baseline
+    label: Baseline
+  - id: DocSites
+    label: Doc Sites
+    category: toolchain
+  - id: MDN
+    label: MDN
+  - id: CanIUse
+    label: CanIUse
+  - id: CanIEmail
+    label: CanIEmail
+  - id: CanIWebview
+    label: CanIWebview
+  - id: WPT
+    label: Web Platform Tests
+  - id: ACD
+    label: ACD
+  - id: DevSignals
+    label: Developer Signals
+  - id: DevTools
+    label: Developer Tools
+  - id: browserslist
+    label: browserslist
+
+edges:
+  - source: bcdresults
+    target: BCD
+  - source: BCDCollector
+    target: BCD
+  - source: BCD
+    target: WebFeatures
+  - source: WebFeatures
+    target: webPlatformDX
+  - source: WebFeatures
+    target: Baseline
+  - source: DocSites
+    target: MDN
+  - source: DocSites
+    target: CanIUse
+  - source: DocSites
+    target: CanIEmail
+  - source: DocSites
+    target: CanIWebview
+  - source: DevTools
+    target: browserslist
+  - source: BCD
+    target: DocSites
+  - source: WebFeatures
+    target: DocSites
+  - source: BCD
+    target: browserslist
