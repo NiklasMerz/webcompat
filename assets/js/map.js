@@ -1,6 +1,7 @@
 (function () {
   const { nodes, edges } = graphData;
   const links = edges.map(e => ({ source: e.source, target: e.target }));
+  const tools = window.toolData || {};
 
   // Bidirectional adjacency for keyboard nav and highlight
   const adjacency = {};
@@ -14,7 +15,8 @@
     const neighbors = adjacency[d.id]
       .map(id => nodes.find(n => n.id === id)?.label ?? id)
       .join(', ');
-    return neighbors ? `${d.label}. Connected to: ${neighbors}` : d.label;
+    const suffix = neighbors ? `. Connected to: ${neighbors}` : '';
+    return `${d.label}${suffix}. Press Enter to open details.`;
   };
 
   const W = window.innerWidth;
@@ -50,6 +52,9 @@
     .attr('stroke-width', 1.5)
     .attr('marker-end', 'url(#arrow)');
 
+  // Close panel when clicking the map background
+  svg.on('click', () => closePanel());
+
   const nodeEl = svg.append('g')
     .selectAll('g')
     .data(nodes)
@@ -58,13 +63,13 @@
     .attr('tabindex', '0')
     .attr('role', 'button')
     .attr('aria-label', ariaLabel)
-    .style('cursor', 'grab')
+    .style('cursor', 'pointer')
     .call(d3.drag()
       .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
       .on('end', (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-  // Focus ring (hidden by default, shown via CSS :focus)
+  // Focus ring
   nodeEl.append('circle')
     .attr('class', 'focus-ring')
     .attr('r', d => nodeRadius(d) + 5)
@@ -84,12 +89,11 @@
     .text(d => d.label)
     .attr('text-anchor', 'middle')
     .attr('y', d => nodeRadius(d) + 14)
-    // Both pass WCAG AA on #0f1117: category ~10:1, regular ~5.5:1
     .attr('fill', d => d.category === 'toolchain' ? '#a0b8f0' : '#8090c0')
     .attr('font-size', d => d.category === 'toolchain' ? '12px' : '10px')
     .style('pointer-events', 'none');
 
-  // Highlight a node and its immediate neighbors; dim everything else
+  // Highlight node and its neighbors; dim everything else
   function highlight(d) {
     const connected = new Set([d.id, ...adjacency[d.id]]);
     nodeEl.style('opacity', n => connected.has(n.id) ? 1 : 0.15);
@@ -105,20 +109,82 @@
     linkEl.style('opacity', 1);
   }
 
+  // Panel
+  const panel = document.getElementById('tool-panel');
+  const panelTitle = document.getElementById('panel-title');
+  const panelMeta = document.getElementById('panel-meta');
+  const panelEdit = document.getElementById('panel-edit');
+  const panelBody = document.getElementById('panel-body');
+  let lastFocused = null;
+
+  function openPanel(d) {
+    lastFocused = document.activeElement;
+    const data = tools[d.id];
+
+    panelTitle.textContent = data?.name ?? d.label;
+
+    panelMeta.innerHTML = [
+      data?.link ? `<a href="${data.link}" target="_blank" rel="noopener noreferrer">${data.link}</a>` : '',
+      data?.maintainer ? `Maintained by ${data.maintainer}` : ''
+    ].filter(Boolean).join(' &nbsp;·&nbsp; ');
+
+    if (data?.edit_url) {
+      panelEdit.href = data.edit_url;
+      panelEdit.hidden = false;
+    } else {
+      panelEdit.hidden = true;
+    }
+
+    panelBody.innerHTML = data?.content ?? '<p>No details available.</p>';
+
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    document.getElementById('panel-close').focus();
+  }
+
+  function closePanel() {
+    if (!panel.classList.contains('open')) return;
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    clearHighlight();
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.getElementById('panel-close').addEventListener('click', closePanel);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePanel();
+  });
+
+  // Trap focus inside panel when open
+  panel.addEventListener('keydown', e => {
+    if (e.key !== 'Tab' || !panel.classList.contains('open')) return;
+    const focusable = [...panel.querySelectorAll('a, button, [tabindex="0"]')];
+    if (!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+
   const tooltip = d3.select('body').append('div').attr('class', 'node-tooltip').style('display', 'none');
 
   nodeEl
+    .on('click', (e, d) => { e.stopPropagation(); highlight(d); openPanel(d); })
     .on('mouseenter', (e, d) => { highlight(d); tooltip.style('display', 'block').text(d.label); })
     .on('mousemove', e => tooltip.style('left', (e.clientX + 14) + 'px').style('top', (e.clientY - 28) + 'px'))
-    .on('mouseleave', () => { clearHighlight(); tooltip.style('display', 'none'); })
+    .on('mouseleave', () => { if (!panel.classList.contains('open')) clearHighlight(); tooltip.style('display', 'none'); })
     .on('focus', (e, d) => highlight(d))
-    .on('blur', () => clearHighlight())
+    .on('blur', () => { if (!panel.classList.contains('open')) clearHighlight(); })
     .on('keydown', (e, d) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         highlight(d);
+        openPanel(d);
       } else if (e.key === 'Escape') {
-        clearHighlight();
+        closePanel();
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault();
         focusNeighbor(d, 1);
@@ -128,12 +194,10 @@
       }
     });
 
-  // Move keyboard focus to a neighbor of d
   function focusNeighbor(d, dir) {
     const neighbors = adjacency[d.id];
     if (!neighbors.length) return;
-    const targetId = neighbors[dir === 1 ? 0 : neighbors.length - 1];
-    nodeEl.filter(n => n.id === targetId).node()?.focus();
+    nodeEl.filter(n => n.id === neighbors[dir === 1 ? 0 : neighbors.length - 1]).node()?.focus();
   }
 
   sim.on('tick', () => {

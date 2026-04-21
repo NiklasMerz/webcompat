@@ -14,9 +14,19 @@ layout: null
     <title id="graph-title">Web Compatibility Tooling</title>
     <desc id="graph-desc">
       Force-directed graph of {{ site.data.graph.nodes | size }} tools and data sources.
-      Tab to focus nodes, arrow keys to move to connected nodes, Enter to highlight connections.
+      Tab to focus nodes, arrow keys to move to connected nodes, Enter to open details.
     </desc>
   </svg>
+
+  <aside id="tool-panel" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <button id="panel-close" aria-label="Close panel">&#x2715;</button>
+    <div id="panel-content">
+      <h2 id="panel-title"></h2>
+      <p id="panel-meta"></p>
+      <a id="panel-edit" class="panel-edit-link" target="_blank" rel="noopener noreferrer" href="#">Edit on GitHub</a>
+      <div id="panel-body"></div>
+    </div>
+  </aside>
 
   <!-- Text alternative for screen readers -->
   <section class="sr-only" aria-label="Graph structure as list">
@@ -39,6 +49,17 @@ layout: null
     const graphData = {
       nodes: {{ site.data.graph.nodes | jsonify }},
       edges: {{ site.data.graph.edges | jsonify }}
+    };
+    window.toolData = {
+      {% for tool in site.tools %}
+      {{ tool.node_id | jsonify }}: {
+        name: {{ tool.title | jsonify }},
+        link: {{ tool.link | jsonify }},
+        maintainer: {{ tool.maintainer | jsonify }},
+        content: {{ tool.content | jsonify }},
+        edit_url: {{ site.edit_base_url | append: tool.path | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
     };
   </script>
   <script src="/assets/js/map.js"></script>
