@@ -41,6 +41,8 @@ nodes:
   - id: BrowserTesting
     label: Browser Testing
     category: toolchain
+  - id: BaselineBrowserMapping
+    label: baseline-browser-mapping
 
 edges:
   - source: bcdresults
@@ -91,3 +93,7 @@ edges:
     target: BrowserTesting
   - source: BCD
     target: BrowserTesting
+  - source: Baseline
+    target: BaselineBrowserMapping
+  - source: BaselineBrowserMapping
+    target: browserslist

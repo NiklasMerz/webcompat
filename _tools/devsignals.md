@@ -1,13 +1,21 @@
 ---
 node_id: DevSignals
 title: Developer Signals
-link: ""
-maintainer: Various
+link: https://github.com/web-platform-dx/developer-signals
+maintainer: web-platform-dx
 ---
 
 ## What it does
 
-An umbrella for structured input from web developers about their pain points, feature needs, and browser compat frustrations. Sources include MDN's annual developer surveys, the State of CSS/JS/HTML surveys, browser vendor feedback channels, and telemetry on feature usage.
+Tracks and organises developer signals — interest, needs, wants, and frustrations — around web platform features. Signals is defined broadly and typically falls into one of these categories:
+
+- Survey results, for example from State of CSS or MDN short surveys
+- Developer interviews, such as those done for the MDN Browser Compatibility Report
+- Browser bugs, including upvote/star counts
+- Reactions on GitHub issues relating to web platform features
+- Blogs, podcasts, or social media
+
+To the extent possible, signals are organised around web-features. The project is only about organising signals, not about conducting or coordinating research. Work is done within the W3C WebDX Community Group.
 
 ## Who is it for
 
@@ -15,10 +23,8 @@ Browser vendors and standards bodies using developer sentiment to prioritise whi
 
 ## Where to find it
 
-- [MDN Web DNA Survey](https://developer.mozilla.org/en-US/blog/mdn-web-dna-report-2024/)
-- [State of CSS](https://stateofcss.com), [State of JS](https://stateofjs.com), [State of HTML](https://stateofhtml.com)
-- Browser vendor feedback forms and issue trackers
+[github.com/web-platform-dx/developer-signals](https://github.com/web-platform-dx/developer-signals)
 
 ## Who is maintaining it
 
-Distributed across multiple organisations — Lea Verou leads the State of surveys; MDN survey is run by Mozilla/Open Web Docs; individual browsers have their own feedback programmes.
+The W3C WebDX Community Group. The project is exploratory and shaped by experimentation — contributions via issues and pull requests are welcome.
