@@ -284,6 +284,10 @@ html.light #map line {
 html.light #arrow path {
   fill: #8090c0;
 }
+html.light .node-group.logo circle:not(.focus-ring) {
+  fill: #f0f4ff;
+  stroke: #6070c0;
+}
 html.light .node-group.category circle:not(.focus-ring) {
   fill: #3a5ad0;
   stroke: #2040a8;

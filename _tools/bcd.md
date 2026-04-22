@@ -3,6 +3,7 @@ node_id: BCD
 title: mdn/browser-compat-data
 link: https://github.com/mdn/browser-compat-data
 maintainer: Mozilla, Open Web Docs, and community contributors
+logo: /assets/img/logos/bcd.png
 ---
 
 ## What it does

@@ -3,6 +3,7 @@ node_id: CanIUse
 title: Can I Use
 link: https://caniuse.com
 maintainer: Alexis Deveria
+logo: /assets/img/logos/caniuse.png
 ---
 
 ## What it does

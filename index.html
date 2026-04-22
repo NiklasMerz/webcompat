@@ -89,6 +89,7 @@ layout: null
         name: {{ tool.title | jsonify }},
         link: {{ tool.link | jsonify }},
         maintainer: {{ tool.maintainer | jsonify }},
+        logo: {{ tool.logo | jsonify }},
         content: {{ tool.content | jsonify }},
         edit_url: {{ site.edit_base_url | append: tool.path | jsonify }}
       }{% unless forloop.last %},{% endunless %}

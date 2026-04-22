@@ -3,6 +3,7 @@ node_id: Baseline
 title: Baseline
 link: https://web.dev/baseline
 maintainer: Google, with cross-vendor input
+logo: /assets/img/logos/baseline-widely-icon.png
 ---
 
 ## What it does

@@ -36,7 +36,20 @@
     .attr('d', 'M0,-4L8,0L0,4Z')
     .attr('fill', '#4a5580');
 
-  const nodeRadius = d => d.category === 'toolchain' ? 22 : 10;
+  const logos = Object.fromEntries(
+    Object.entries(tools).filter(([, t]) => t.logo).map(([id, t]) => [id, t.logo])
+  );
+
+  const nodeRadius = d => {
+    if (logos[d.id]) return 30;
+    return d.category === 'toolchain' ? 22 : 10;
+  };
+
+  // Clip paths for logo nodes
+  nodes.filter(n => logos[n.id]).forEach(n => {
+    defs.append('clipPath').attr('id', `logo-clip-${n.id}`)
+      .append('circle').attr('r', 30);
+  });
 
   const sim = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d => d.id).distance(160))
@@ -59,7 +72,7 @@
     .selectAll('g')
     .data(nodes)
     .join('g')
-    .attr('class', d => d.category ? 'node-group category' : 'node-group')
+    .attr('class', d => ['node-group', d.category && 'category', logos[d.id] && 'logo'].filter(Boolean).join(' '))
     .attr('tabindex', '0')
     .attr('role', 'button')
     .attr('aria-label', ariaLabel)
@@ -77,11 +90,26 @@
     .attr('stroke', '#60a8ff')
     .attr('stroke-width', 2);
 
-  nodeEl.filter(d => d.category === 'toolchain')
+  // Logo nodes
+  nodeEl.filter(d => !!logos[d.id])
+    .append('circle').attr('r', 30)
+    .attr('fill', '#ffffff').attr('stroke', '#5a7adc').attr('stroke-width', 2);
+
+  nodeEl.filter(d => !!logos[d.id])
+    .append('image')
+    .attr('href', d => logos[d.id])
+    .attr('x', -30).attr('y', -30)
+    .attr('width', 60).attr('height', 60)
+    .attr('clip-path', d => `url(#logo-clip-${d.id})`)
+    .style('pointer-events', 'none');
+
+  // Category nodes (no logo)
+  nodeEl.filter(d => d.category === 'toolchain' && !logos[d.id])
     .append('circle').attr('r', 22)
     .attr('fill', '#2a3a6e').attr('stroke', '#5a7adc').attr('stroke-width', 1.5);
 
-  nodeEl.filter(d => !d.category)
+  // Regular nodes (no logo)
+  nodeEl.filter(d => !d.category && !logos[d.id])
     .append('circle').attr('r', 10)
     .attr('fill', '#1e2538').attr('stroke', '#3a4a7a').attr('stroke-width', 1.5);
 
@@ -89,8 +117,8 @@
     .text(d => d.label)
     .attr('text-anchor', 'middle')
     .attr('y', d => nodeRadius(d) + 14)
-    .attr('fill', d => d.category === 'toolchain' ? '#a0b8f0' : '#8090c0')
-    .attr('font-size', d => d.category === 'toolchain' ? '12px' : '10px')
+    .attr('fill', d => d.category || logos[d.id] ? '#a0b8f0' : '#8090c0')
+    .attr('font-size', d => d.category || logos[d.id] ? '12px' : '10px')
     .style('pointer-events', 'none');
 
   // Highlight node and its neighbors; dim everything else

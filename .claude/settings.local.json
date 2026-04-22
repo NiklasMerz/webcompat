@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sL \"https://developer.mozilla.org/favicon-48x48.png\" -o mdn.png)",
+      "Bash(curl -sL \"https://developer.mozilla.org/favicon-48x48.png\" -o bcd.png)",
+      "Bash(curl -sL \"https://caniuse.com/img/favicon-128.png\" -o caniuse.png)",
+      "Bash(curl -sL \"https://www.caniemail.com/favicon.ico\" -o caniemail.ico)",
+      "Bash(curl -sL \"https://caniwebview.com/favicon.ico\" -o caniwebview.ico)",
+      "Bash(curl -sL \"https://caniwebview.com\")",
+      "Bash(curl -sL \"https://web.dev/baseline\")",
+      "Bash(curl -sL \"https://webstatus.dev\")",
+      "Bash(curl -sL \"https://caniwebview.com/assets/images/w3-community-logo.png\" -o caniwebview_w3.png)",
+      "Bash(curl -sL \"https://caniwebview.com/apple-touch-icon.png\" -o caniwebview_touch.png)",
+      "Bash(curl -sL \"https://www.caniemail.com/apple-touch-icon.png\" -o caniemail_touch.png)",
+      "Bash(curl -sL \"https://www.caniemail.com\")",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/HTeuMeuLeu/caniemail/main/public/img/caniemail-icon.png\" -o caniemail_gh.png)",
+      "Bash(curl -sL \"https://developer.chrome.com/static/docs/images/baseline-badge.svg\" -o baseline_chrome.svg)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" \"https://www.caniemail.com\")",
+      "Bash(python3 -c \"import sys,json; [print\\(x['name']\\) for x in json.load\\(sys.stdin\\) if isinstance\\(x, dict\\)]\")",
+      "Bash(curl -s -L \"https://www.caniemail.com\")",
+      "Bash(curl -s -L \"https://webstatus.dev\")",
+      "Bash(curl -s -L \"https://api.github.com/repos/hteumeuleu/caniemail/contents\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(d['name'], d.get\\('type'\\)\\) for d in data]\")",
+      "Bash(curl -s -L \"https://api.github.com/repos/web-platform-dx/web-features/contents\")",
+      "Bash(curl -o /dev/null -s -w \"%{http_code}|%{content_type}|%{size_download}\" \"https://raw.githubusercontent.com/hteumeuleu/caniemail/main/assets/images/logo.svg\")",
+      "Bash(curl -o /dev/null -s -w \"%{http_code}|%{content_type}|%{size_download}\" \"https://raw.githubusercontent.com/hteumeuleu/caniemail/main/assets/images/og.png\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(d['name'], d.get\\('type'\\), d.get\\('download_url',''\\)\\) for d in data]\")",
+      "Bash(curl -L -o /var/home/niklas/oss/webcompat/assets/img/logos/caniemail_official.svg \"https://raw.githubusercontent.com/hteumeuleu/caniemail/main/src/assets/img/caniemail-logo.svg\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(file *)"
+    ]
+  }
+}

@@ -3,6 +3,7 @@ node_id: CanIWebview
 title: Can I Webview
 link: https://caniwebview.com
 maintainer: WebView Community Group
+logo: /assets/img/logos/caniwebview_w3.png
 ---
 
 ## What it does

@@ -3,6 +3,7 @@ node_id: MDN
 title: MDN Web Docs
 link: https://developer.mozilla.org
 maintainer: Mozilla and Open Web Docs
+logo: /assets/img/logos/mdn.png
 ---
 
 ## What it does
