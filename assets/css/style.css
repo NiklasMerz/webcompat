@@ -238,6 +238,28 @@ html.light #icon-moon { display: block; }
   white-space: nowrap;
 }
 
+/* ── Footer ─────────────────────────────────────────── */
+#site-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 50;
+  padding: 0.5rem 1.25rem;
+  pointer-events: none;
+}
+
+#site-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #505878;
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+#site-footer a:hover { color: #c0cce8; }
+
 /* ── Light mode ─────────────────────────────────────── */
 html.light body {
   background: #eef0f8;
@@ -290,6 +312,10 @@ html.light #panel-body h2        { color: #8090c0; }
 html.light #panel-body p,
 html.light #panel-body ul        { color: #3a4870; }
 html.light #panel-body a         { color: #2a4ad0; }
+
+/* Footer */
+html.light #site-footer a       { color: #8090c0; }
+html.light #site-footer a:hover { color: #1a2040; }
 
 /* Tooltip */
 html.light .node-tooltip {
