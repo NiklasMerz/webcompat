@@ -34,6 +34,8 @@ nodes:
     label: Developer Tools
   - id: browserslist
     label: browserslist
+  - id: WebStatus
+    label: webstatus.dev
 
 edges:
   - source: bcdresults
@@ -62,3 +64,9 @@ edges:
     target: DocSites
   - source: BCD
     target: browserslist
+  - source: WebFeatures
+    target: WebStatus
+  - source: Baseline
+    target: WebStatus
+  - source: DocSites
+    target: WebStatus
