@@ -52,12 +52,14 @@
   });
 
   const sim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(160))
-    .force('charge', d3.forceManyBody().strength(-600))
+    .force('link', d3.forceLink(links).id(d => d.id).distance(200))
+    .force('charge', d3.forceManyBody().strength(-1200))
     .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collide', d3.forceCollide(d => nodeRadius(d) + 28));
+    .force('collide', d3.forceCollide(d => nodeRadius(d) + 40));
 
-  const linkEl = svg.append('g')
+  const zoomLayer = svg.append('g');
+
+  const linkEl = zoomLayer.append('g')
     .selectAll('line')
     .data(links)
     .join('line')
@@ -65,10 +67,19 @@
     .attr('stroke-width', 1.5)
     .attr('marker-end', 'url(#arrow)');
 
-  // Close panel when clicking the map background
-  svg.on('click', () => closePanel());
+  // Close panel when tapping/clicking the map background (not after a pan)
+  let svgDragged = false;
+  svg.on('pointerdown', () => { svgDragged = false; })
+     .on('pointermove', e => { if (e.buttons > 0) svgDragged = true; })
+     .on('click', () => { if (!svgDragged) closePanel(); });
 
-  const nodeEl = svg.append('g')
+  // Pinch-to-zoom and pan
+  const zoom = d3.zoom()
+    .scaleExtent([0.2, 4])
+    .on('zoom', e => zoomLayer.attr('transform', e.transform));
+  svg.call(zoom);
+
+  const nodeEl = zoomLayer.append('g')
     .selectAll('g')
     .data(nodes)
     .join('g')
@@ -228,6 +239,21 @@
     nodeEl.filter(n => n.id === neighbors[dir === 1 ? 0 : neighbors.length - 1]).node()?.focus();
   }
 
+  sim.on('end', () => {
+    const pad = 48;
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    nodes.forEach(d => {
+      const r = nodeRadius(d);
+      x0 = Math.min(x0, d.x - r); y0 = Math.min(y0, d.y - r);
+      x1 = Math.max(x1, d.x + r); y1 = Math.max(y1, d.y + r);
+    });
+    const scale = Math.min((W - pad * 2) / (x1 - x0), (H - pad * 2) / (y1 - y0), 1.2);
+    const tx = (W - scale * (x0 + x1)) / 2;
+    const ty = (H - scale * (y0 + y1)) / 2;
+    svg.transition().duration(600)
+      .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  });
+
   sim.on('tick', () => {
     linkEl
       .attr('x1', d => d.source.x)
@@ -243,10 +269,7 @@
         return d.target.y - (dy / len) * nodeRadius(d.target);
       });
 
-    nodeEl.attr('transform', d => {
-      const pad = nodeRadius(d) + 16;
-      return `translate(${Math.max(pad, Math.min(W - pad, d.x))},${Math.max(pad, Math.min(H - pad - 16, d.y))})`;
-    });
+    nodeEl.attr('transform', d => `translate(${d.x},${d.y})`);
   });
 })();
 
