@@ -30,8 +30,6 @@ nodes:
     label: ACD
   - id: DevSignals
     label: Developer Signals
-  - id: DevTools
-    label: Developer Tools
   - id: browserslist
     label: browserslist
   - id: WebStatus
@@ -71,8 +69,6 @@ edges:
     target: CanIEmail
   - source: DocSites
     target: CanIWebview
-  - source: DevTools
-    target: browserslist
   - source: BCD
     target: DocSites
   - source: WebFeatures
