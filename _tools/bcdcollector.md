@@ -1,8 +1,9 @@
 ---
 node_id: BCDCollector
 title: BCD Collector
-link: https://bcd-collector.appspot.com
-maintainer: Open Web Docs / Google
+link: https://collector.openwebdocs.org/
+maintainer: Open Web Docs
+logo: /assets/img/logos/collector.png
 ---
 
 ## What it does
@@ -15,9 +16,9 @@ BCD contributors who want to verify compat data in a specific browser version â€
 
 ## Where to find it
 
-[bcd-collector.appspot.com](https://bcd-collector.appspot.com)
+[collector.openwebdocs.org/](https://collector.openwebdocs.org/)
 
-Source at [github.com/foolip/mdn-bcd-collector](https://github.com/foolip/mdn-bcd-collector).
+Source at [https://github.com/openwebdocs/mdn-bcd-collector](https://github.com/openwebdocs/mdn-bcd-collector).
 
 ## Who is maintaining it
 

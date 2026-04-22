@@ -3,6 +3,7 @@ node_id: WebStatus
 title: webstatus.dev
 link: https://webstatus.dev
 maintainer: Google / web-platform-dx
+logo: /assets/img/logos/fyi.svg
 ---
 
 ## What it does

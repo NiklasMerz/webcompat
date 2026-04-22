@@ -3,6 +3,7 @@ node_id: Interop
 title: Interop
 link: https://wpt.fyi/interop
 maintainer: Apple, Google, Microsoft, Mozilla, Bocoup, and Igalia
+logo: /assets/img/logos/fyi.svg
 ---
 
 ## What it does

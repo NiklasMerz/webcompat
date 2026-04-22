@@ -3,6 +3,7 @@ node_id: CanIEmail
 title: Can I Email
 link: https://www.caniemail.com
 maintainer: Tilt Studio
+logo: /assets/img/logos/email.svg
 ---
 
 ## What it does
