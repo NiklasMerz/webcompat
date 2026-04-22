@@ -292,8 +292,7 @@ html.light .node-group:not(.category) circle:not(.focus-ring) {
   fill: #c8d4f4;
   stroke: #7080c0;
 }
-html.light .node-group.category text  { fill: #ffffff; }
-html.light .node-group:not(.category) text { fill: #1a2448; }
+html.light .node-group text { fill: #1a2448; }
 
 /* Panel */
 html.light #tool-panel {
