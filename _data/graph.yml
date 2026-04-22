@@ -38,6 +38,9 @@ nodes:
     label: webstatus.dev
   - id: WebCompat
     label: webcompat.com
+  - id: BrowserTesting
+    label: Browser Testing
+    category: toolchain
 
 edges:
   - source: bcdresults
@@ -51,6 +54,8 @@ edges:
   - source: WebFeatures
     target: webPlatformDX
   - source: WebFeatures
+    target: Baseline
+  - source: webPlatformDX
     target: Baseline
   - source: WebFeatures
     target: DevSignals
@@ -80,3 +85,9 @@ edges:
     target: DevSignals
   - source: WebCompat
     target: BCD
+  - source: WebFeatures
+    target: BrowserTesting
+  - source: WPT
+    target: BrowserTesting
+  - source: BCD
+    target: BrowserTesting
