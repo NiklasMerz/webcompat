@@ -36,6 +36,8 @@ nodes:
     label: browserslist
   - id: WebStatus
     label: webstatus.dev
+  - id: WebCompat
+    label: webcompat.com
 
 edges:
   - source: bcdresults
@@ -74,3 +76,7 @@ edges:
     target: WebStatus
   - source: DocSites
     target: WebStatus
+  - source: WebCompat
+    target: DevSignals
+  - source: WebCompat
+    target: BCD
