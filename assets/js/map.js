@@ -59,7 +59,7 @@
     .selectAll('g')
     .data(nodes)
     .join('g')
-    .attr('class', 'node-group')
+    .attr('class', d => d.category ? 'node-group category' : 'node-group')
     .attr('tabindex', '0')
     .attr('role', 'button')
     .attr('aria-label', ariaLabel)
@@ -219,5 +219,16 @@
       const pad = nodeRadius(d) + 16;
       return `translate(${Math.max(pad, Math.min(W - pad, d.x))},${Math.max(pad, Math.min(H - pad - 16, d.y))})`;
     });
+  });
+})();
+
+// Theme toggle
+(function () {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
   });
 })();
