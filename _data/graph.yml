@@ -44,10 +44,14 @@ edges:
     target: BCD
   - source: BCD
     target: WebFeatures
+  - source: BCD
+    target: ACD
   - source: WebFeatures
     target: webPlatformDX
   - source: WebFeatures
     target: Baseline
+  - source: WebFeatures
+    target: DevSignals
   - source: DocSites
     target: MDN
   - source: DocSites
