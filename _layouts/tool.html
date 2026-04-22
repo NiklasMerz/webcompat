@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ page.title }} — webcompat.dev</title>
+  <meta name="description" content="{{ page.content | strip_html | strip | truncate: 155 }}">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="webcompat.dev">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.content | strip_html | strip | truncate: 155 }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="/assets/css/tool.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.title | jsonify }},
+    "description": {{ page.content | strip_html | strip | truncate: 155 | jsonify }},
+    "url": {{ page.url | absolute_url | jsonify }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "webcompat.dev",
+      "url": {{ site.url | jsonify }}
+    }{% if page.link %},
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": {{ page.title | jsonify }},
+      "url": {{ page.link | jsonify }}
+    }{% endif %}
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-name">webcompat.dev</a>
+    <nav class="site-nav">
+      <a href="/tools/">All Tools</a>
+      <a href="/">Map</a>
+    </nav>
+  </header>
+
+  <main>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">webcompat.dev</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li aria-current="page">{{ page.title }}</li>
+      </ol>
+    </nav>
+
+    <article>
+      <h1>{{ page.title }}</h1>
+
+      {% if page.link or page.maintainer %}
+      <dl class="tool-meta">
+        {% if page.link %}
+        <dt>Website</dt>
+        <dd><a href="{{ page.link }}" rel="noopener noreferrer">{{ page.link }}</a></dd>
+        {% endif %}
+        {% if page.maintainer %}
+        <dt>Maintained by</dt>
+        <dd>{{ page.maintainer }}</dd>
+        {% endif %}
+      </dl>
+      {% endif %}
+
+      <div class="tool-content">
+        {{ content }}
+      </div>
+
+      <footer class="tool-footer">
+        <a href="{{ site.edit_base_url }}{{ page.path }}" class="edit-link" target="_blank" rel="noopener noreferrer">Edit on GitHub</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,9 +1,16 @@
 title: webcompat.dev
 description: The web compatibility tooling landscape
 baseurl: ""
-url: ""
+url: "https://webcompat.dev"
 edit_base_url: https://github.com/NiklasMerz/webcompat/edit/main/
 
 collections:
   tools:
-    output: false
+    output: true
+    permalink: /tools/:name/
+
+defaults:
+  - scope:
+      type: tools
+    values:
+      layout: tool

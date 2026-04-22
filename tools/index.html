@@ -1,0 +1,63 @@
+---
+layout: null
+title: All Tools — webcompat.dev
+description: A directory of web compatibility tools and data sources.
+permalink: /tools/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }}</title>
+  <meta name="description" content="{{ page.description }}">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="/assets/css/tool.css">
+  <style>
+    .tools-list { list-style: none; margin-top: 2rem; }
+    .tools-list li { border-bottom: 1px solid #1a1f2e; }
+    .tools-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      text-decoration: none;
+      color: #c8d0e8;
+    }
+    .tools-list a:hover .tool-name { color: #a0b8f0; }
+    .tool-name { font-size: 0.95rem; font-weight: 500; }
+    .tool-maintainer { font-size: 0.8rem; color: #3a4060; white-space: nowrap; }
+    .page-intro { color: #505878; margin-top: 0.5rem; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-name">webcompat.dev</a>
+    <nav class="site-nav">
+      <a href="/tools/" aria-current="page">All Tools</a>
+      <a href="/">Map</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>All Tools</h1>
+    <p class="page-intro">{{ site.tools | size }} tools and data sources in the web compatibility ecosystem. Click any entry for details.</p>
+
+    <ul class="tools-list">
+      {% assign sorted_tools = site.tools | sort: "title" %}
+      {% for tool in sorted_tools %}
+      <li>
+        <a href="{{ tool.url }}">
+          <span class="tool-name">{{ tool.title }}</span>
+          {% if tool.maintainer %}<span class="tool-maintainer">{{ tool.maintainer }}</span>{% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </main>
+</body>
+</html>

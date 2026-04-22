@@ -18,7 +18,9 @@ html, body {
   left: 0;
   z-index: 50;
   padding: 0.6rem 1rem;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .site-name {
@@ -27,6 +29,18 @@ html, body {
   color: #e0e8ff;
   letter-spacing: 0.02em;
   opacity: 0.7;
+}
+
+#site-header .site-nav a {
+  font-size: 0.8rem;
+  color: #505878;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+#site-header .site-nav a:hover {
+  color: #a0b0d8;
+  opacity: 1;
 }
 
 #map {
