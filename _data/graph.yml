@@ -43,6 +43,8 @@ nodes:
     category: toolchain
   - id: BaselineBrowserMapping
     label: baseline-browser-mapping
+  - id: Interop
+    label: Interop
 
 edges:
   - source: bcdresults
@@ -97,3 +99,9 @@ edges:
     target: BaselineBrowserMapping
   - source: BaselineBrowserMapping
     target: browserslist
+  - source: WPT
+    target: Interop
+  - source: Interop
+    target: BrowserTesting
+  - source: Interop
+    target: WebStatus
