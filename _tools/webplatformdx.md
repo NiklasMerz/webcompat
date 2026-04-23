@@ -3,6 +3,7 @@ node_id: webPlatformDX
 title: web-features package
 link: https://github.com/web-platform-dx/web-features
 maintainer: web-platform-dx working group
+logo: /assets/img/logos/npm.svg
 ---
 
 ## What it does
