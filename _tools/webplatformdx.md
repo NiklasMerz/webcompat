@@ -1,5 +1,5 @@
 ---
-node_id: webPlatformDX
+node_id: webfeatures-package
 title: web-features package
 link: https://github.com/web-platform-dx/web-features
 maintainer: web-platform-dx working group

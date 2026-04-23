@@ -7,7 +7,7 @@ nodes:
     label: BCD Collector
   - id: WebFeatures
     label: Web Features
-  - id: webPlatformDX
+  - id: webfeatures-package
     label: "web-platform-dx/web-features"
   - id: Baseline
     label: Baseline
@@ -56,10 +56,10 @@ edges:
   - source: BCD
     target: MDN
   - source: WebFeatures
-    target: webPlatformDX
+    target: webfeatures-package
   - source: WebFeatures
     target: Baseline
-  - source: webPlatformDX
+  - source: webfeatures-package
     target: Baseline
   - source: WebFeatures
     target: DevSignals
