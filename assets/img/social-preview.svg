@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0f1117"/>
+
+  <!-- Top accent line -->
+  <rect width="1200" height="2" fill="#3a5adc" opacity="0.6"/>
+
+  <!-- ── Left graph decoration ── -->
+  <line x1="90" y1="140" x2="195" y2="225" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="195" y1="225" x2="110" y2="340" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="195" y1="225" x2="320" y2="178" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="195" y1="225" x2="290" y2="335" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="320" y1="178" x2="375" y2="275" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="290" y1="335" x2="375" y2="275" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="110" y1="340" x2="175" y2="455" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="290" y1="335" x2="225" y2="465" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="175" y1="455" x2="225" y2="465" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="90" y1="140" x2="48" y2="62" stroke="#181f38" stroke-width="1"/>
+  <line x1="225" y1="465" x2="165" y2="565" stroke="#181f38" stroke-width="1"/>
+  <line x1="165" y1="565" x2="275" y2="575" stroke="#181f38" stroke-width="1"/>
+
+  <circle cx="48"  cy="62"  r="5"  fill="#141828" stroke="#222e58" stroke-width="1"/>
+  <circle cx="90"  cy="140" r="7"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="195" cy="225" r="15" fill="#1e2d6a" stroke="#3a5adc" stroke-width="2"/>
+  <circle cx="110" cy="340" r="8"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="320" cy="178" r="8"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="290" cy="335" r="9"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="375" cy="275" r="8"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="175" cy="455" r="7"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="225" cy="465" r="7"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="165" cy="565" r="6"  fill="#141828" stroke="#222e58" stroke-width="1"/>
+  <circle cx="275" cy="575" r="5"  fill="#141828" stroke="#222e58" stroke-width="1"/>
+
+  <!-- ── Right graph decoration ── -->
+  <line x1="1110" y1="140" x2="1005" y2="225" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="1005" y1="225" x2="1090" y2="340" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="1005" y1="225" x2="880"  y2="178" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="1005" y1="225" x2="910"  y2="335" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="880"  y1="178" x2="825"  y2="275" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="910"  y1="335" x2="825"  y2="275" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="1090" y1="340" x2="1025" y2="455" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="910"  y1="335" x2="975"  y2="465" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="1025" y1="455" x2="975"  y2="465" stroke="#1e2a4a" stroke-width="1.5"/>
+  <line x1="1110" y1="140" x2="1152" y2="62"  stroke="#181f38" stroke-width="1"/>
+  <line x1="975"  y1="465" x2="1035" y2="565" stroke="#181f38" stroke-width="1"/>
+  <line x1="1035" y1="565" x2="925"  y2="575" stroke="#181f38" stroke-width="1"/>
+
+  <circle cx="1152" cy="62"  r="5"  fill="#141828" stroke="#222e58" stroke-width="1"/>
+  <circle cx="1110" cy="140" r="7"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="1005" cy="225" r="15" fill="#1e2d6a" stroke="#3a5adc" stroke-width="2"/>
+  <circle cx="1090" cy="340" r="8"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="880"  cy="178" r="8"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="910"  cy="335" r="9"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="825"  cy="275" r="8"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="1025" cy="455" r="7"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="975"  cy="465" r="7"  fill="#181f38" stroke="#2a4090" stroke-width="1.5"/>
+  <circle cx="1035" cy="565" r="6"  fill="#141828" stroke="#222e58" stroke-width="1"/>
+  <circle cx="925"  cy="575" r="5"  fill="#141828" stroke="#222e58" stroke-width="1"/>
+
+  <!-- ── Center text ── -->
+  <text x="600" y="270"
+        font-family="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="70" font-weight="700" fill="#e0e8ff" text-anchor="middle" letter-spacing="-1">webcompat.dev</text>
+
+  <text x="600" y="325"
+        font-family="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="25" fill="#8090b8" text-anchor="middle">The web compatibility tooling landscape</text>
+
+  <text x="600" y="378"
+        font-family="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="18" fill="#414d6e" text-anchor="middle">An interactive map of browser compatibility tools, data sources,</text>
+  <text x="600" y="404"
+        font-family="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
+        font-size="18" fill="#414d6e" text-anchor="middle">and the connections between them</text>
+</svg>
