@@ -1,21 +1,16 @@
 nodes:
   - id: BCD
     label: "mdn/browser-compat-data"
-    category: toolchain
   - id: bcdresults
     label: "openwebdocs/mdn-bcd-results"
   - id: BCDCollector
     label: BCD Collector
   - id: WebFeatures
     label: Web Features
-    category: toolchain
   - id: webPlatformDX
     label: "web-platform-dx/web-features"
   - id: Baseline
     label: Baseline
-  - id: DocSites
-    label: Doc Sites
-    category: toolchain
   - id: MDN
     label: MDN
   - id: CanIUse
@@ -36,9 +31,6 @@ nodes:
     label: webstatus.dev
   - id: WebCompat
     label: webcompat.com
-  - id: BrowserTesting
-    label: Browser Testing
-    category: toolchain
   - id: BaselineBrowserMapping
     label: baseline-browser-mapping
   - id: Interop
@@ -49,10 +41,20 @@ edges:
     target: BCD
   - source: BCDCollector
     target: BCD
+  - source: WebCompat
+    target: BCD
   - source: BCD
     target: WebFeatures
   - source: BCD
     target: ACD
+  - source: BCD
+    target: browserslist
+  - source: BCD
+    target: CanIUse
+  - source: BCD
+    target: CanIWebview
+  - source: BCD
+    target: MDN
   - source: WebFeatures
     target: webPlatformDX
   - source: WebFeatures
@@ -61,51 +63,25 @@ edges:
     target: Baseline
   - source: WebFeatures
     target: DevSignals
-  - source: DocSites
-    target: MDN
-  - source: DocSites
+  - source: WebFeatures
     target: CanIUse
-  - source: DocSites
-    target: CanIEmail
-  - source: DocSites
+  - source: WebFeatures
     target: CanIWebview
-  - source: BCD
-    target: DocSites
-  - source: WebFeatures
-    target: DocSites
-  - source: BCD
-    target: browserslist
   - source: WebFeatures
     target: WebStatus
-  - source: Baseline
-    target: WebStatus
-  - source: DocSites
-    target: WebStatus
+  - source: WebFeatures
+    target: CanIEmail
+  - source: WebFeatures
+    target: MDN
   - source: WebCompat
     target: DevSignals
-  - source: WebCompat
-    target: BCD
-  - source: WebFeatures
-    target: BrowserTesting
-  - source: WebFeatures
-    target: CanIUse
-  - source: WebFeatures
-    target: CanIWebview
-  - source: WPT
-    target: BrowserTesting
-  - source: BCD
-    target: BrowserTesting
-  - source: BCD
-    target: CanIUse
-  - source: BCD
-    target: CanIWebview
+  - source: Baseline
+    target: WebStatus
   - source: Baseline
     target: BaselineBrowserMapping
   - source: BaselineBrowserMapping
     target: browserslist
   - source: WPT
     target: Interop
-  - source: Interop
-    target: BrowserTesting
   - source: Interop
     target: WebStatus

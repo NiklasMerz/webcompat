@@ -11,6 +11,13 @@
     adjacency[e.target].push(e.source);
   });
 
+  const degree = {};
+  nodes.forEach(n => { degree[n.id] = 0; });
+  edges.forEach(e => {
+    degree[e.source] = (degree[e.source] || 0) + 1;
+    degree[e.target] = (degree[e.target] || 0) + 1;
+  });
+
   const ariaLabel = d => {
     const neighbors = adjacency[d.id]
       .map(id => nodes.find(n => n.id === id)?.label ?? id)
@@ -42,7 +49,7 @@
 
   const nodeRadius = d => {
     if (logos[d.id]) return 30;
-    return d.category === 'toolchain' ? 22 : 10;
+    return Math.max(10, Math.min(22, 8 + (degree[d.id] || 0) * 1.5));
   };
 
   // Clip paths for logo nodes
@@ -83,7 +90,7 @@
     .selectAll('g')
     .data(nodes)
     .join('g')
-    .attr('class', d => ['node-group', d.category && 'category', logos[d.id] && 'logo'].filter(Boolean).join(' '))
+    .attr('class', d => ['node-group', logos[d.id] && 'logo'].filter(Boolean).join(' '))
     .attr('tabindex', '0')
     .attr('role', 'button')
     .attr('aria-label', ariaLabel)
@@ -114,22 +121,17 @@
     .attr('clip-path', d => `url(#logo-clip-${d.id})`)
     .style('pointer-events', 'none');
 
-  // Category nodes (no logo)
-  nodeEl.filter(d => d.category === 'toolchain' && !logos[d.id])
-    .append('circle').attr('r', 22)
-    .attr('fill', '#2a3a6e').attr('stroke', '#5a7adc').attr('stroke-width', 1.5);
-
-  // Regular nodes (no logo)
-  nodeEl.filter(d => !d.category && !logos[d.id])
-    .append('circle').attr('r', 10)
+  // Non-logo nodes — radius driven by degree
+  nodeEl.filter(d => !logos[d.id])
+    .append('circle').attr('r', d => nodeRadius(d))
     .attr('fill', '#1e2538').attr('stroke', '#3a4a7a').attr('stroke-width', 1.5);
 
   nodeEl.append('text')
     .text(d => d.label)
     .attr('text-anchor', 'middle')
     .attr('y', d => nodeRadius(d) + 14)
-    .attr('fill', d => d.category || logos[d.id] ? '#a0b8f0' : '#8090c0')
-    .attr('font-size', d => d.category || logos[d.id] ? '12px' : '10px')
+    .attr('fill', d => logos[d.id] ? '#a0b8f0' : '#8090c0')
+    .attr('font-size', d => logos[d.id] ? '12px' : '10px')
     .style('pointer-events', 'none');
 
   // Highlight node and its neighbors; dim everything else

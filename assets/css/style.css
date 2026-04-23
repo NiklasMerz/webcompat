@@ -288,11 +288,7 @@ html.light .node-group.logo circle:not(.focus-ring) {
   fill: #f0f4ff;
   stroke: #6070c0;
 }
-html.light .node-group.category circle:not(.focus-ring) {
-  fill: #3a5ad0;
-  stroke: #2040a8;
-}
-html.light .node-group:not(.category) circle:not(.focus-ring) {
+html.light .node-group:not(.logo) circle:not(.focus-ring) {
   fill: #c8d4f4;
   stroke: #7080c0;
 }
