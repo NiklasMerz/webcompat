@@ -1,5 +1,5 @@
 (function () {
-  const { nodes, edges } = graphData;
+  const { nodes, edges, groups = [] } = graphData;
   const links = edges.map(e => ({ source: e.source, target: e.target }));
   const tools = window.toolData || {};
 
@@ -65,6 +65,41 @@
     .force('collide', d3.forceCollide(d => nodeRadius(d) + 40));
 
   const zoomLayer = svg.append('g');
+
+  // Hull backgrounds for groups — rendered first so they sit behind everything
+  const hullLayer = zoomLayer.append('g').attr('class', 'hull-layer');
+  const hullGroups = hullLayer.selectAll('g')
+    .data(groups)
+    .join('g')
+    .attr('class', 'hull-group');
+  hullGroups.append('path').attr('class', 'hull-path');
+  hullGroups.append('text').attr('class', 'hull-label').text(d => d.label);
+
+  function hullPath(memberNodes, pad) {
+    const pts = [];
+    memberNodes.forEach(n => {
+      const r = nodeRadius(n) + pad;
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2;
+        pts.push([n.x + Math.cos(a) * r, n.y + Math.sin(a) * r]);
+      }
+    });
+    const hull = d3.polygonHull(pts);
+    return hull ? 'M' + hull.map(p => p.join(',')).join('L') + 'Z' : null;
+  }
+
+  function updateHulls() {
+    hullGroups.each(function (group) {
+      const members = nodes.filter(n => group.members.includes(n.id));
+      if (!members.length) return;
+      const path = hullPath(members, 28);
+      if (!path) return;
+      d3.select(this).select('.hull-path').attr('d', path);
+      const cx = d3.mean(members, n => n.x);
+      const cy = d3.mean(members, n => n.y);
+      d3.select(this).select('.hull-label').attr('x', cx).attr('y', cy);
+    });
+  }
 
   const linkEl = zoomLayer.append('g')
     .selectAll('line')
@@ -257,6 +292,7 @@
   });
 
   sim.on('tick', () => {
+    updateHulls();
     linkEl
       .attr('x1', d => d.source.x)
       .attr('y1', d => d.source.y)
