@@ -87,6 +87,10 @@ edges:
     target: BCD
   - source: WebFeatures
     target: BrowserTesting
+  - source: WebFeatures
+    target: CanIUse
+  - source: WebFeatures
+    target: CanIWebview
   - source: WPT
     target: BrowserTesting
   - source: BCD
