@@ -95,6 +95,10 @@ edges:
     target: BrowserTesting
   - source: BCD
     target: BrowserTesting
+  - source: BCD
+    target: CanIUse
+  - source: BCD
+    target: CanIWebview
   - source: Baseline
     target: BaselineBrowserMapping
   - source: BaselineBrowserMapping
