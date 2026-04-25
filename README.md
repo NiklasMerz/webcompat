@@ -27,6 +27,7 @@ Each tool page on webcompat.dev embeds a `<tool-graph>` custom element that rend
 |-----------|----------|-------------|
 | `node-id` | yes | The node ID as defined in `_data/graph.yml` (e.g. `BCD`, `Baseline`, `WPT`) |
 | `data-base` | external use | Base URL used to load graph data and resolve logo/page URLs. Omit when embedding on webcompat.dev itself. |
+| `show-description` | no | Set to `"false"` to always hide the description panel. Default: enabled — panel appears automatically when the component is at least 500 px wide. |
 
 The component loads D3.js from the CDN automatically if it is not already present on the page. When running on an external site, graph data is loaded by injecting a `<script>` tag pointing to `{data-base}/assets/data/graph-data.js` — this avoids CORS restrictions that would block a `fetch()` request to a different origin.
 

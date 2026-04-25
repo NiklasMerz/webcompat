@@ -1,6 +1,9 @@
 (function () {
+  const DESC_WIDTH = 220;   // px — description panel width
+  const DESC_THRESHOLD = 500; // px — minimum component width to show it
+
   class ToolGraph extends HTMLElement {
-    static get observedAttributes() { return ['node-id']; }
+    static get observedAttributes() { return ['node-id', 'show-description']; }
 
     connectedCallback() { this._init(); }
     attributeChangedCallback() { if (this.isConnected) this._init(); }
@@ -35,20 +38,14 @@
         });
       }
 
-      this._detachShadow();
-      this._render(nodeId, graphData, toolData);
+      if (this._ro) this._ro.disconnect();
+      const shadow = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      shadow.innerHTML = '';
+      this._render(nodeId, graphData, toolData, shadow);
     }
 
-    _detachShadow() {
-      // Reset shadow root if re-rendering after attribute change
-      if (this.shadowRoot) {
-        this.shadowRoot.innerHTML = '';
-      }
-    }
-
-    _render(nodeId, graphData, toolData) {
+    _render(nodeId, graphData, toolData, shadow) {
       const { nodes: allNodes, edges: allEdges } = graphData;
-
       if (!allNodes.find(n => n.id === nodeId)) return;
 
       // Build subgraph: center node + direct neighbors
@@ -67,8 +64,9 @@
       );
       const links = edges.map(e => ({ source: e.source, target: e.target }));
 
-      // Shadow DOM
-      const shadow = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      const tool = toolData[nodeId] || {};
+      const showDesc = this.getAttribute('show-description') !== 'false';
+
       shadow.innerHTML = `
         <style>
           :host { display: block; }
@@ -77,8 +75,53 @@
             border: 1px solid #1e2540;
             border-radius: 8px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
           }
-          svg { display: block; width: 100%; }
+          .body {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            min-height: 0;
+          }
+          svg {
+            display: block;
+            flex: 1;
+            min-width: 0;
+          }
+          .desc {
+            width: ${DESC_WIDTH}px;
+            flex-shrink: 0;
+            border-left: 1px solid #1e2540;
+            padding: 1.25rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            font-family: system-ui, sans-serif;
+            overflow: hidden;
+          }
+          .desc[hidden] { display: none; }
+          .desc h3 {
+            margin: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c0d0ff;
+            line-height: 1.3;
+          }
+          .desc p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: #505878;
+            line-height: 1.55;
+            flex: 1;
+          }
+          .desc a {
+            font-size: 0.73rem;
+            color: #5a8adc;
+            text-decoration: none;
+            align-self: flex-start;
+          }
+          .desc a:hover { text-decoration: underline; }
           .foot {
             padding: 0.5rem 0.75rem;
             border-top: 1px solid #1a2035;
@@ -93,16 +136,30 @@
           .foot a:hover { text-decoration: underline; }
         </style>
         <div class="wrap">
-          <svg id="g" height="280" role="img" aria-label="Connection graph for ${nodeId}"></svg>
+          <div class="body">
+            <svg id="g" height="280" role="img" aria-label="Connection graph for ${nodeId}"></svg>
+            <aside class="desc" ${!showDesc ? 'hidden' : ''}>
+              <h3>${_esc(tool.name ?? nodeId)}</h3>
+              <p>${_esc(tool.excerpt ?? '')}</p>
+              ${tool.url ? `<a href="${_esc(tool.url)}">Read more →</a>` : ''}
+            </aside>
+          </div>
           <div class="foot">
-            ${toolData[nodeId]?.name ?? nodeId} is part of a large landscape of webcompat tools. Check out <a href="https://webcompat.dev" target="_blank" rel="noopener noreferrer">webcompat.dev</a> to learn more.
+            ${_esc(tool.name ?? nodeId)} is part of a large landscape of webcompat tools. Check out <a href="https://webcompat.dev" target="_blank" rel="noopener noreferrer">webcompat.dev</a> to learn more.
           </div>
         </div>
       `;
 
       const svgEl = shadow.getElementById('g');
+      const desc = shadow.querySelector('.desc');
 
-      // Defer so the element is laid out and clientWidth is available
+      if (showDesc) {
+        this._ro = new ResizeObserver(([entry]) => {
+          desc.hidden = entry.contentRect.width < DESC_THRESHOLD;
+        });
+        this._ro.observe(this);
+      }
+
       requestAnimationFrame(() => this._drawD3(svgEl, nodeId, nodes, links, toolData));
     }
 
@@ -111,6 +168,7 @@
       const H = 280;
 
       svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
       const logos = {};
       nodes.forEach(n => { if (toolData[n.id]?.logo) logos[n.id] = toolData[n.id].logo; });
@@ -137,7 +195,6 @@
           .append('circle').attr('r', radius(n));
       });
 
-      // Fix center node in the middle
       const center = nodes.find(n => n.id === nodeId);
       if (center) { center.fx = W / 2; center.fy = H / 2; }
 
@@ -158,7 +215,6 @@
         .attr('role', d => toolData[d.id]?.url ? 'link' : null)
         .attr('aria-label', d => d.label);
 
-      // Dashed halo for center node
       nodeEl.filter(d => d.id === nodeId)
         .append('circle')
         .attr('r', d => radius(d) + 6)
@@ -167,7 +223,6 @@
         .attr('stroke-width', 1.5)
         .attr('stroke-dasharray', '4 3');
 
-      // Logo nodes
       nodeEl.filter(d => !!logos[d.id])
         .append('circle')
         .attr('r', d => radius(d))
@@ -183,7 +238,6 @@
         .attr('clip-path', d => `url(#tg-c-${d.id})`)
         .style('pointer-events', 'none');
 
-      // Plain nodes
       nodeEl.filter(d => !logos[d.id])
         .append('circle')
         .attr('r', d => radius(d))
@@ -191,7 +245,6 @@
         .attr('stroke', d => d.id === nodeId ? '#4a6ac8' : '#2e3a5a')
         .attr('stroke-width', d => d.id === nodeId ? 2 : 1.5);
 
-      // Labels
       nodeEl.append('text')
         .text(d => d.label)
         .attr('text-anchor', 'middle')
@@ -206,13 +259,6 @@
         const url = toolData[d.id]?.url;
         if (url) window.location.href = url;
       });
-
-      // Edge endpoint adjusted to stop at node circumference
-      const edgeEnd = (axis, target, source) => coord => {
-        const dx = target.x - source.x, dy = target.y - source.y;
-        const len = Math.sqrt(dx * dx + dy * dy) || 1;
-        return (axis === 'x' ? target.x : target.y) - ((axis === 'x' ? dx : dy) / len) * radius(target);
-      };
 
       sim.on('tick', () => {
         linkEl
@@ -239,6 +285,12 @@
       s.src = src; s.onload = resolve; s.onerror = reject;
       document.head.appendChild(s);
     });
+  }
+
+  function _esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   if (!customElements.get('tool-graph')) {
