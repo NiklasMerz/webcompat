@@ -15,6 +15,11 @@
 
   <link rel="canonical" href="{{ page.url | absolute_url }}">
   <link rel="stylesheet" href="/assets/css/tool.css">
+  <script>
+    const stored = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    if (stored === 'light' || (!stored && prefersLight)) document.documentElement.classList.add('light');
+  </script>
 
   <script type="application/ld+json">
   {
@@ -74,10 +79,40 @@
         {{ content }}
       </div>
 
+      {% if page.node_id %}
+      <section class="tool-connections" aria-label="Connections on the compatibility map">
+        <h2 class="connections-heading">Connections</h2>
+        <tool-graph node-id="{{ page.node_id }}"></tool-graph>
+        <p class="connections-caption">
+          <a href="/">View full map</a>
+        </p>
+      </section>
+      {% endif %}
+
       <footer class="tool-footer">
         <a href="{{ site.edit_base_url }}{{ page.path }}" class="edit-link" target="_blank" rel="noopener noreferrer">Edit on GitHub</a>
       </footer>
     </article>
   </main>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    window.graphData = {
+      nodes: {{ site.data.graph.nodes | jsonify }},
+      edges: {{ site.data.graph.edges | jsonify }}
+    };
+    window.toolData = {
+      {% for tool in site.tools %}
+      {{ tool.node_id | jsonify }}: {
+        name: {{ tool.title | jsonify }},
+        link: {{ tool.link | jsonify }},
+        maintainer: {{ tool.maintainer | jsonify }},
+        logo: {{ tool.logo | jsonify }},
+        url: {{ tool.url | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    };
+  </script>
+  <script src="/assets/js/tool-graph.js"></script>
 </body>
 </html>

@@ -153,6 +153,43 @@ h1 {
   color: #a0b8f0;
 }
 
+/* ── Connections graph ───────────────────────────────── */
+.tool-connections {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid #1a1f2e;
+}
+
+.connections-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #3a4060;
+  margin-bottom: 1rem;
+  /* override h2 top margin from .tool-content */
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+tool-graph {
+  display: block;
+}
+
+.connections-caption {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  color: #3a4060;
+}
+
+.connections-caption a {
+  color: #3a4060;
+  text-decoration: none;
+}
+
+.connections-caption a:hover { color: #6070a0; }
+
 /* ── Footer ─────────────────────────────────────────── */
 .tool-footer {
   margin-top: 3rem;
