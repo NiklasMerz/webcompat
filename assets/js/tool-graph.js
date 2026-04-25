@@ -73,7 +73,7 @@
         <style>
           :host { display: block; }
           .wrap {
-            background: #0d1020;
+            background: transparent;
             border: 1px solid #1e2540;
             border-radius: 8px;
             overflow: hidden;
