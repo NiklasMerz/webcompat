@@ -31,6 +31,22 @@ Each tool page on webcompat.dev embeds a `<tool-graph>` custom element that rend
 
 The component loads D3.js from the CDN automatically if it is not already present on the page. When running on an external site, graph data is loaded by injecting a `<script>` tag pointing to `{data-base}/assets/data/graph-data.js` — this avoids CORS restrictions that would block a `fetch()` request to a different origin.
 
+### Static SVG for GitHub READMEs
+
+Each tool has a pre-generated SVG graph available at:
+
+```
+https://webcompat.dev/assets/img/graphs/{nodeId}.svg
+```
+
+Embed it in any Markdown file (e.g. a GitHub README):
+
+```markdown
+![BCD connections](https://webcompat.dev/assets/img/graphs/BCD.svg)
+```
+
+The SVG is generated automatically during the Jekyll build by `_plugins/graph_svg_generator.rb`. It shows the tool centred with incoming and outgoing connections, and supports both dark and light colour schemes via a CSS `prefers-color-scheme` media query.
+
 ### Data endpoint
 
 The full graph and tool metadata is available as JSON:
