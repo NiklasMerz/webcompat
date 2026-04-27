@@ -98,7 +98,8 @@ layout: null
   <script>
     const graphData = {
       nodes: {{ site.data.graph.nodes | jsonify }},
-      edges: {{ site.data.graph.edges | jsonify }}
+      edges: {{ site.data.graph.edges | jsonify }},
+      groups: {{ site.data.graph.groups | jsonify }}
     };
     window.toolData = {
       {% for tool in site.tools %}

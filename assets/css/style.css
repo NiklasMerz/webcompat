@@ -85,6 +85,34 @@ html.light #icon-moon { display: block; }
   display: block;
 }
 
+/* ── Group hulls ────────────────────────────────────── */
+.hull-path {
+  fill: rgba(58, 90, 220, 0.06);
+  stroke: rgba(58, 90, 220, 0.18);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+}
+
+.hull-label {
+  fill: #3a5090;
+  font-size: 11px;
+  font-family: system-ui, sans-serif;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+html.light .hull-path {
+  fill: rgba(40, 70, 200, 0.05);
+  stroke: rgba(40, 70, 200, 0.2);
+}
+
+html.light .hull-label {
+  fill: #5060a0;
+}
+
 /* ── Focus ring ─────────────────────────────────────── */
 .node-group:focus {
   outline: none;

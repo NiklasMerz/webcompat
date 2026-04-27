@@ -85,3 +85,11 @@ edges:
     target: Interop
   - source: Interop
     target: WebStatus
+
+groups:
+  - id: DocSites
+    label: Doc Sites
+    members: [MDN, CanIUse, CanIEmail, CanIWebview]
+  - id: BrowserTesting
+    label: Browser Testing
+    members: [WPT, Interop]
