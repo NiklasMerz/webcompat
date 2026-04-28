@@ -85,6 +85,43 @@ html.light #icon-moon { display: block; }
   display: block;
 }
 
+/* ── Group hulls ────────────────────────────────────── */
+.hull-path {
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+}
+
+.hull-label {
+  font-size: 11px;
+  font-family: system-ui, sans-serif;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Tools — orange */
+.hull-group-Tools .hull-path  { fill: rgba(224, 144, 64, 0.07); stroke: rgba(224, 144, 64, 0.28); }
+.hull-group-Tools .hull-label { fill: #c07030; }
+
+/* Data Sources — blue */
+.hull-group-DataSources .hull-path  { fill: rgba(64, 176, 224, 0.07); stroke: rgba(64, 176, 224, 0.28); }
+.hull-group-DataSources .hull-label { fill: #2090c0; }
+
+/* Websites — green */
+.hull-group-Websites .hull-path  { fill: rgba(64, 204, 136, 0.07); stroke: rgba(64, 204, 136, 0.28); }
+.hull-group-Websites .hull-label { fill: #20a868; }
+
+html.light .hull-group-Tools .hull-path  { fill: rgba(184, 96, 16, 0.07); stroke: rgba(184, 96, 16, 0.25); }
+html.light .hull-group-Tools .hull-label { fill: #a05010; }
+
+html.light .hull-group-DataSources .hull-path  { fill: rgba(8, 128, 176, 0.07); stroke: rgba(8, 128, 176, 0.25); }
+html.light .hull-group-DataSources .hull-label { fill: #0870a0; }
+
+html.light .hull-group-Websites .hull-path  { fill: rgba(16, 136, 80, 0.07); stroke: rgba(16, 136, 80, 0.25); }
+html.light .hull-group-Websites .hull-label { fill: #108850; }
+
 /* ── Focus ring ─────────────────────────────────────── */
 .node-group:focus {
   outline: none;

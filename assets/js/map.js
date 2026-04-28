@@ -1,5 +1,5 @@
 (function () {
-  const { nodes, edges } = graphData;
+  const { nodes, edges, groups = [] } = graphData;
   const links = edges.map(e => ({ source: e.source, target: e.target }));
   const tools = window.toolData || {};
 
@@ -58,13 +58,87 @@
       .append('circle').attr('r', 30);
   });
 
+  // Assign each node to its first group for clustering
+  const nodeGroupId = {};
+  groups.forEach(g => g.members.forEach(id => { nodeGroupId[id] = g.id; }));
+
+  // Target positions for each group — triangular spread across the canvas
+  const groupPos = {
+    Tools:       { x: W * 0.20, y: H * 0.58 },
+    DataSources: { x: W * 0.50, y: H * 0.36 },
+    Websites:    { x: W * 0.80, y: H * 0.58 }
+  };
+
+  // Push nodes away from other groups' centroids each tick
+  function forceGroupSeparation() {
+    return function (alpha) {
+      const centroids = {};
+      groups.forEach(g => {
+        const members = nodes.filter(n => g.members.includes(n.id));
+        if (!members.length) return;
+        centroids[g.id] = { x: d3.mean(members, n => n.x), y: d3.mean(members, n => n.y) };
+      });
+      nodes.forEach(n => {
+        const gid = nodeGroupId[n.id];
+        if (!gid) return;
+        groups.forEach(g => {
+          if (g.id === gid || !centroids[g.id]) return;
+          const dx = n.x - centroids[g.id].x;
+          const dy = n.y - centroids[g.id].y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          const f = 300 * alpha / (dist * dist);
+          n.vx += dx * f;
+          n.vy += dy * f;
+        });
+      });
+    };
+  }
+
   const sim = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d => d.id).distance(200))
     .force('charge', d3.forceManyBody().strength(-1200))
-    .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collide', d3.forceCollide(d => nodeRadius(d) + 40));
+    .force('center', d3.forceCenter(W / 2, H / 2).strength(0.04))
+    .force('collide', d3.forceCollide(d => nodeRadius(d) + 40))
+    .force('group-x', d3.forceX(d => groupPos[nodeGroupId[d.id]]?.x ?? W / 2).strength(0.22))
+    .force('group-y', d3.forceY(d => groupPos[nodeGroupId[d.id]]?.y ?? H / 2).strength(0.22))
+    .force('group-separation', forceGroupSeparation());
 
   const zoomLayer = svg.append('g');
+
+  // Hull backgrounds for groups — rendered first so they sit behind everything
+  const hullLayer = zoomLayer.append('g').attr('class', 'hull-layer');
+  const hullGroups = hullLayer.selectAll('g')
+    .data(groups)
+    .join('g')
+    .attr('class', d => `hull-group hull-group-${d.id}`);
+  hullGroups.append('path').attr('class', 'hull-path');
+  hullGroups.append('text').attr('class', 'hull-label').text(d => d.label);
+
+  function hullPath(memberNodes, pad) {
+    const pts = [];
+    memberNodes.forEach(n => {
+      const r = nodeRadius(n) + pad;
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2;
+        pts.push([n.x + Math.cos(a) * r, n.y + Math.sin(a) * r]);
+      }
+    });
+    const hull = d3.polygonHull(pts);
+    return hull ? 'M' + hull.map(p => p.join(',')).join('L') + 'Z' : null;
+  }
+
+  function updateHulls() {
+    hullGroups.each(function (group) {
+      const members = nodes.filter(n => group.members.includes(n.id));
+      if (!members.length) return;
+      const path = hullPath(members, 28);
+      if (!path) return;
+      d3.select(this).select('.hull-path').attr('d', path);
+      const cx = d3.mean(members, n => n.x);
+      const cy = d3.mean(members, n => n.y);
+      d3.select(this).select('.hull-label').attr('x', cx).attr('y', cy);
+    });
+  }
 
   const linkEl = zoomLayer.append('g')
     .selectAll('line')
@@ -257,6 +331,7 @@
   });
 
   sim.on('tick', () => {
+    updateHulls();
     linkEl
       .attr('x1', d => d.source.x)
       .attr('y1', d => d.source.y)

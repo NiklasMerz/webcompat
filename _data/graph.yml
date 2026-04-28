@@ -43,6 +43,24 @@ nodes:
     label: Reffy
   - id: specref
     label: Specref
+  - id: StateOfJS
+    label: State of JavaScript
+  - id: StateOfCSS
+    label: State of CSS
+  - id: StateOfHTML
+    label: State of HTML
+  - id: ChromiumBugs
+    label: Chromium Bug Tracker
+  - id: WebKitBugs
+    label: WebKit Bug Tracker
+  - id: MozillaBugs
+    label: Mozilla Bug Tracker
+  - id: ChromeStatus
+    label: Chrome Platform Status
+  - id: MozillaPositions
+    label: Mozilla Standards Positions
+  - id: WebKitPositions
+    label: WebKit Standards Positions
 
 edges:
   - source: bcdresults
@@ -111,3 +129,44 @@ edges:
     target: BCD
   - source: webref
     target: WebFeatures
+  - source: StateOfJS
+    target: DevSignals
+  - source: StateOfCSS
+    target: DevSignals
+  - source: StateOfHTML
+    target: DevSignals
+  - source: WebCompat
+    target: ChromiumBugs
+  - source: WebCompat
+    target: WebKitBugs
+  - source: WebCompat
+    target: MozillaBugs
+  - source: ChromiumBugs
+    target: DevSignals
+  - source: WebKitBugs
+    target: DevSignals
+  - source: MozillaBugs
+    target: DevSignals
+  - source: BCD
+    target: ChromiumBugs
+  - source: BCD
+    target: WebKitBugs
+  - source: BCD
+    target: MozillaBugs
+  - source: ChromeStatus
+    target: ChromiumBugs
+  - source: MozillaPositions
+    target: MozillaBugs
+  - source: WebKitPositions
+    target: WebKitBugs
+
+groups:
+  - id: Tools
+    label: Tools
+    members: [BCDCollector, WPT, browserslist, BaselineBrowserMapping, reffy]
+  - id: DataSources
+    label: Data
+    members: [BCD, bcdresults, WebFeatures, webfeatures-package, Baseline, ACD, DevSignals, webref, browser-specs, specref]
+  - id: Websites
+    label: Websites
+    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, WebCompat, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromiumBugs, WebKitBugs, MozillaBugs, ChromeStatus, MozillaPositions, WebKitPositions]
