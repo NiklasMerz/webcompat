@@ -177,4 +177,7 @@ groups:
     members: [BCD, bcdresults, WebFeatures, webfeatures-package, Baseline, ACD, DevSignals, webref, browser-specs, specref]
   - id: Websites
     label: Websites
-    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, WebCompat, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromiumBugs, WebKitBugs, MozillaBugs, ChromeStatus, MozillaPositions, WebKitPositions, ARIAT, a11ysupport]
+    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, WebCompat, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromeStatus, MozillaPositions, WebKitPositions, ARIAT, a11ysupport]
+  - id: BugTrackers
+    label: Bug Trackers
+    members: [ChromiumBugs, WebKitBugs, MozillaBugs]

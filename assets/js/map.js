@@ -64,9 +64,10 @@
 
   // Target positions for each group — triangular spread across the canvas
   const groupPos = {
-    Tools:       { x: W * 0.20, y: H * 0.58 },
-    DataSources: { x: W * 0.50, y: H * 0.36 },
-    Websites:    { x: W * 0.80, y: H * 0.58 }
+    Tools:       { x: W * 0.20, y: H * 0.60 },
+    DataSources: { x: W * 0.50, y: H * 0.32 },
+    Websites:    { x: W * 0.80, y: H * 0.60 },
+    BugTrackers: { x: W * 0.50, y: H * 0.78 }
   };
 
   // Push nodes away from other groups' centroids each tick
