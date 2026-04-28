@@ -85,3 +85,5 @@ edges:
     target: Interop
   - source: Interop
     target: WebStatus
+  - source: Interop
+    target: WebFeatures
