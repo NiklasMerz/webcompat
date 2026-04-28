@@ -71,7 +71,7 @@
   const hullGroups = hullLayer.selectAll('g')
     .data(groups)
     .join('g')
-    .attr('class', 'hull-group');
+    .attr('class', d => `hull-group hull-group-${d.id}`);
   hullGroups.append('path').attr('class', 'hull-path');
   hullGroups.append('text').attr('class', 'hull-label').text(d => d.label);
 
@@ -169,6 +169,24 @@
     .attr('font-size', d => logos[d.id] ? '12px' : '10px')
     .style('pointer-events', 'none');
 
+  const typeColor = { 'tool': '#e09040', 'data-source': '#40b0e0', 'website': '#40cc88' };
+  const typeLabel = { 'tool': 'Tool', 'data-source': 'Data', 'website': 'Site' };
+
+  nodeEl.each(function (d) {
+    if (!d.types || !d.types.length) return;
+    const baseY = nodeRadius(d) + 26;
+    d.types.forEach((t, i) => {
+      d3.select(this).append('text')
+        .attr('class', `node-type-tag node-type-tag-${t}`)
+        .text(typeLabel[t] || t)
+        .attr('text-anchor', 'middle')
+        .attr('y', baseY + i * 11)
+        .attr('fill', typeColor[t] || '#888')
+        .attr('font-size', '8px')
+        .style('pointer-events', 'none');
+    });
+  });
+
   // Highlight node and its neighbors; dim everything else
   function highlight(d) {
     const connected = new Set([d.id, ...adjacency[d.id]]);
@@ -199,7 +217,11 @@
 
     panelTitle.textContent = data?.name ?? d.label;
 
+    const typeBadges = (d.types || [])
+      .map(t => `<span class="node-type-badge node-type-${t}">${typeLabel[t] || t}</span>`)
+      .join('');
     panelMeta.innerHTML = [
+      typeBadges,
       data?.link ? `<a href="${data.link}" target="_blank" rel="noopener noreferrer">${data.link}</a>` : '',
       data?.maintainer ? `Maintained by ${data.maintainer}` : ''
     ].filter(Boolean).join(' &nbsp;·&nbsp; ');

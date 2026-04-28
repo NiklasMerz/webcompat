@@ -87,14 +87,11 @@ html.light #icon-moon { display: block; }
 
 /* ── Group hulls ────────────────────────────────────── */
 .hull-path {
-  fill: rgba(58, 90, 220, 0.06);
-  stroke: rgba(58, 90, 220, 0.18);
   stroke-width: 1.5;
   stroke-dasharray: 5 3;
 }
 
 .hull-label {
-  fill: #3a5090;
   font-size: 11px;
   font-family: system-ui, sans-serif;
   text-anchor: middle;
@@ -104,14 +101,26 @@ html.light #icon-moon { display: block; }
   text-transform: uppercase;
 }
 
-html.light .hull-path {
-  fill: rgba(40, 70, 200, 0.05);
-  stroke: rgba(40, 70, 200, 0.2);
-}
+/* Tools — orange */
+.hull-group-Tools .hull-path  { fill: rgba(224, 144, 64, 0.07); stroke: rgba(224, 144, 64, 0.28); }
+.hull-group-Tools .hull-label { fill: #c07030; }
 
-html.light .hull-label {
-  fill: #5060a0;
-}
+/* Data Sources — blue */
+.hull-group-DataSources .hull-path  { fill: rgba(64, 176, 224, 0.07); stroke: rgba(64, 176, 224, 0.28); }
+.hull-group-DataSources .hull-label { fill: #2090c0; }
+
+/* Websites — green */
+.hull-group-Websites .hull-path  { fill: rgba(64, 204, 136, 0.07); stroke: rgba(64, 204, 136, 0.28); }
+.hull-group-Websites .hull-label { fill: #20a868; }
+
+html.light .hull-group-Tools .hull-path  { fill: rgba(184, 96, 16, 0.07); stroke: rgba(184, 96, 16, 0.25); }
+html.light .hull-group-Tools .hull-label { fill: #a05010; }
+
+html.light .hull-group-DataSources .hull-path  { fill: rgba(8, 128, 176, 0.07); stroke: rgba(8, 128, 176, 0.25); }
+html.light .hull-group-DataSources .hull-label { fill: #0870a0; }
+
+html.light .hull-group-Websites .hull-path  { fill: rgba(16, 136, 80, 0.07); stroke: rgba(16, 136, 80, 0.25); }
+html.light .hull-group-Websites .hull-label { fill: #108850; }
 
 /* ── Focus ring ─────────────────────────────────────── */
 .node-group:focus {
@@ -194,6 +203,25 @@ html.light .hull-label {
 #panel-meta a:hover {
   text-decoration: underline;
 }
+
+/* Node type badges in panel meta */
+.node-type-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.node-type-tool        { color: #e09040; background: rgba(224, 144, 64, 0.12); }
+.node-type-data-source { color: #40b0e0; background: rgba(64, 176, 224, 0.12); }
+.node-type-website     { color: #40cc88; background: rgba(64, 204, 136, 0.12); }
+
+html.light .node-type-tool        { color: #b86010; background: rgba(184, 96, 16, 0.1); }
+html.light .node-type-data-source { color: #0880b0; background: rgba(8, 128, 176, 0.1); }
+html.light .node-type-website     { color: #108850; background: rgba(16, 136, 80, 0.1); }
 
 /* Rendered markdown body */
 .panel-edit-link {
@@ -321,6 +349,9 @@ html.light .node-group:not(.logo) circle:not(.focus-ring) {
   stroke: #7080c0;
 }
 html.light .node-group text { fill: #1a2448; }
+html.light .node-type-tag-tool        { fill: #b86010; }
+html.light .node-type-tag-data-source { fill: #0880b0; }
+html.light .node-type-tag-website     { fill: #108850; }
 
 /* Panel */
 html.light #tool-panel {
