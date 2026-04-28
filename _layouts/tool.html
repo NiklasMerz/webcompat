@@ -62,8 +62,19 @@
     <article>
       <h1>{{ page.title }}</h1>
 
-      {% if page.link or page.maintainer %}
+      {% assign tool_group = nil %}
+      {% for group in site.data.graph.groups %}
+        {% if group.members contains page.node_id %}
+          {% assign tool_group = group %}
+        {% endif %}
+      {% endfor %}
+
+      {% if page.link or page.maintainer or tool_group %}
       <dl class="tool-meta">
+        {% if tool_group %}
+        <dt>Category</dt>
+        <dd>{{ tool_group.label }}</dd>
+        {% endif %}
         {% if page.link %}
         <dt>Website</dt>
         <dd><a href="{{ page.link }}" rel="noopener noreferrer">{{ page.link }}</a></dd>

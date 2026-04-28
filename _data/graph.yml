@@ -163,10 +163,10 @@ edges:
 groups:
   - id: Tools
     label: Tools
-    members: [BCDCollector, WPT, browserslist, BaselineBrowserMapping, WebCompat, reffy]
+    members: [BCDCollector, WPT, browserslist, BaselineBrowserMapping, reffy]
   - id: DataSources
-    label: Data Sources
+    label: Data
     members: [BCD, bcdresults, WebFeatures, webfeatures-package, Baseline, ACD, DevSignals, webref, browser-specs, specref]
   - id: Websites
     label: Websites
-    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromiumBugs, WebKitBugs, MozillaBugs, ChromeStatus, MozillaPositions, WebKitPositions]
+    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, WebCompat, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromiumBugs, WebKitBugs, MozillaBugs, ChromeStatus, MozillaPositions, WebKitPositions]
