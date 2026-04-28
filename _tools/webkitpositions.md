@@ -3,7 +3,6 @@ node_id: WebKitPositions
 title: WebKit Standards Positions
 link: https://github.com/WebKit/standards-positions
 maintainer: Apple
-logo: /assets/img/logos/webkit.svg
 ---
 
 ## What it does

@@ -3,7 +3,7 @@ node_id: StateOfCSS
 title: State of CSS
 link: https://stateofcss.com
 maintainer: Devographics
-logo: /assets/img/logos/stateofcss.svg
+logo: /assets/img/logos/devographics.png
 ---
 
 ## What it does

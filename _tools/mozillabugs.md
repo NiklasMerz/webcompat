@@ -3,7 +3,6 @@ node_id: MozillaBugs
 title: Mozilla Bug Tracker (Bugzilla)
 link: https://bugzilla.mozilla.org
 maintainer: Mozilla
-logo: /assets/img/logos/bugzilla.svg
 ---
 
 ## What it does

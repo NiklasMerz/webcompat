@@ -3,7 +3,6 @@ node_id: WebKitBugs
 title: WebKit Bug Tracker
 link: https://bugs.webkit.org
 maintainer: Apple
-logo: /assets/img/logos/webkit.svg
 ---
 
 ## What it does
