@@ -1,70 +1,48 @@
 nodes:
   - id: BCD
     label: "mdn/browser-compat-data"
-    types: [data-source]
   - id: bcdresults
     label: "openwebdocs/mdn-bcd-results"
-    types: [data-source]
   - id: BCDCollector
     label: BCD Collector
-    types: [tool]
   - id: WebFeatures
     label: Web Features
-    types: [data-source]
   - id: webfeatures-package
     label: "web-platform-dx/web-features"
-    types: [data-source]
   - id: Baseline
     label: Baseline
-    types: [data-source]
   - id: MDN
     label: MDN
-    types: [website]
   - id: CanIUse
     label: CanIUse
-    types: [data-source, website]
   - id: CanIEmail
     label: CanIEmail
-    types: [website]
   - id: CanIWebView
     label: CanIWebView
-    types: [data-source, website]
   - id: WPT
     label: Web Platform Tests
-    types: [tool]
   - id: ACD
     label: ACD
-    types: [data-source]
   - id: DevSignals
     label: Developer Signals
-    types: [data-source]
   - id: browserslist
     label: browserslist
-    types: [tool]
   - id: WebStatus
     label: webstatus.dev
-    types: [website]
   - id: WebCompat
     label: webcompat.com
-    types: [website, tool]
   - id: BaselineBrowserMapping
     label: baseline-browser-mapping
-    types: [tool]
   - id: Interop
     label: Interop
-    types: [website]
   - id: webref
     label: Webref
-    types: [data-source]
   - id: browser-specs
     label: browser-specs
-    types: [data-source]
   - id: reffy
     label: Reffy
-    types: [tool]
   - id: specref
     label: Specref
-    types: [data-source]
 
 edges:
   - source: bcdresults

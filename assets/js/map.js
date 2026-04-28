@@ -58,11 +58,24 @@
       .append('circle').attr('r', 30);
   });
 
+  // Assign each node to its first group for clustering
+  const nodeGroupId = {};
+  groups.forEach(g => g.members.forEach(id => { nodeGroupId[id] = g.id; }));
+
+  // Target positions for each group — triangular spread across the canvas
+  const groupPos = {
+    Tools:       { x: W * 0.20, y: H * 0.58 },
+    DataSources: { x: W * 0.50, y: H * 0.36 },
+    Websites:    { x: W * 0.80, y: H * 0.58 }
+  };
+
   const sim = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d => d.id).distance(200))
     .force('charge', d3.forceManyBody().strength(-1200))
-    .force('center', d3.forceCenter(W / 2, H / 2))
-    .force('collide', d3.forceCollide(d => nodeRadius(d) + 40));
+    .force('center', d3.forceCenter(W / 2, H / 2).strength(0.04))
+    .force('collide', d3.forceCollide(d => nodeRadius(d) + 40))
+    .force('group-x', d3.forceX(d => groupPos[nodeGroupId[d.id]]?.x ?? W / 2).strength(0.12))
+    .force('group-y', d3.forceY(d => groupPos[nodeGroupId[d.id]]?.y ?? H / 2).strength(0.12));
 
   const zoomLayer = svg.append('g');
 
@@ -169,24 +182,6 @@
     .attr('font-size', d => logos[d.id] ? '12px' : '10px')
     .style('pointer-events', 'none');
 
-  const typeColor = { 'tool': '#e09040', 'data-source': '#40b0e0', 'website': '#40cc88' };
-  const typeLabel = { 'tool': 'Tool', 'data-source': 'Data', 'website': 'Site' };
-
-  nodeEl.each(function (d) {
-    if (!d.types || !d.types.length) return;
-    const baseY = nodeRadius(d) + 26;
-    d.types.forEach((t, i) => {
-      d3.select(this).append('text')
-        .attr('class', `node-type-tag node-type-tag-${t}`)
-        .text(typeLabel[t] || t)
-        .attr('text-anchor', 'middle')
-        .attr('y', baseY + i * 11)
-        .attr('fill', typeColor[t] || '#888')
-        .attr('font-size', '8px')
-        .style('pointer-events', 'none');
-    });
-  });
-
   // Highlight node and its neighbors; dim everything else
   function highlight(d) {
     const connected = new Set([d.id, ...adjacency[d.id]]);
@@ -217,11 +212,7 @@
 
     panelTitle.textContent = data?.name ?? d.label;
 
-    const typeBadges = (d.types || [])
-      .map(t => `<span class="node-type-badge node-type-${t}">${typeLabel[t] || t}</span>`)
-      .join('');
     panelMeta.innerHTML = [
-      typeBadges,
       data?.link ? `<a href="${data.link}" target="_blank" rel="noopener noreferrer">${data.link}</a>` : '',
       data?.maintainer ? `Maintained by ${data.maintainer}` : ''
     ].filter(Boolean).join(' &nbsp;·&nbsp; ');
