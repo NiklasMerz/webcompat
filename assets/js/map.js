@@ -28,6 +28,7 @@
 
   const W = window.innerWidth;
   const H = window.innerHeight;
+  const mobile = W < 640;
 
   const svg = d3.select('#map')
     .attr('viewBox', `0 0 ${W} ${H}`);
@@ -47,23 +48,31 @@
     Object.entries(tools).filter(([, t]) => t.logo).map(([id, t]) => [id, t.logo])
   );
 
+  const logoR = mobile ? 18 : 30;
   const nodeRadius = d => {
-    if (logos[d.id]) return 30;
-    return Math.max(10, Math.min(22, 8 + (degree[d.id] || 0) * 1.5));
+    if (logos[d.id]) return logoR;
+    const base = mobile ? 5 : 8;
+    const scale = mobile ? 1.0 : 1.5;
+    return Math.max(mobile ? 7 : 10, Math.min(mobile ? 14 : 22, base + (degree[d.id] || 0) * scale));
   };
 
   // Clip paths for logo nodes
   nodes.filter(n => logos[n.id]).forEach(n => {
     defs.append('clipPath').attr('id', `logo-clip-${n.id}`)
-      .append('circle').attr('r', 30);
+      .append('circle').attr('r', logoR);
   });
 
   // Assign each node to its first group for clustering
   const nodeGroupId = {};
   groups.forEach(g => g.members.forEach(id => { nodeGroupId[id] = g.id; }));
 
-  // Target positions for each group — triangular spread across the canvas
-  const groupPos = {
+  // Portrait-stacked positions on mobile, triangular spread on desktop
+  const groupPos = mobile ? {
+    DataSources: { x: W * 0.50, y: H * 0.20 },
+    Tools:       { x: W * 0.22, y: H * 0.55 },
+    Websites:    { x: W * 0.78, y: H * 0.55 },
+    BugTrackers: { x: W * 0.50, y: H * 0.82 }
+  } : {
     Tools:       { x: W * 0.20, y: H * 0.60 },
     DataSources: { x: W * 0.50, y: H * 0.32 },
     Websites:    { x: W * 0.80, y: H * 0.60 },
@@ -87,7 +96,7 @@
           const dx = n.x - centroids[g.id].x;
           const dy = n.y - centroids[g.id].y;
           const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          const f = 300 * alpha / (dist * dist);
+          const f = (mobile ? 150 : 300) * alpha / (dist * dist);
           n.vx += dx * f;
           n.vy += dy * f;
         });
@@ -96,12 +105,12 @@
   }
 
   const sim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(200))
-    .force('charge', d3.forceManyBody().strength(-1200))
+    .force('link', d3.forceLink(links).id(d => d.id).distance(mobile ? 80 : 200))
+    .force('charge', d3.forceManyBody().strength(mobile ? -400 : -1200))
     .force('center', d3.forceCenter(W / 2, H / 2).strength(0.04))
-    .force('collide', d3.forceCollide(d => nodeRadius(d) + 40))
-    .force('group-x', d3.forceX(d => groupPos[nodeGroupId[d.id]]?.x ?? W / 2).strength(0.22))
-    .force('group-y', d3.forceY(d => groupPos[nodeGroupId[d.id]]?.y ?? H / 2).strength(0.22))
+    .force('collide', d3.forceCollide(d => nodeRadius(d) + (mobile ? 18 : 40)))
+    .force('group-x', d3.forceX(d => groupPos[nodeGroupId[d.id]]?.x ?? W / 2).strength(mobile ? 0.30 : 0.22))
+    .force('group-y', d3.forceY(d => groupPos[nodeGroupId[d.id]]?.y ?? H / 2).strength(mobile ? 0.30 : 0.22))
     .force('group-separation', forceGroupSeparation());
 
   const zoomLayer = svg.append('g');
@@ -185,14 +194,14 @@
 
   // Logo nodes
   nodeEl.filter(d => !!logos[d.id])
-    .append('circle').attr('r', 30)
+    .append('circle').attr('r', logoR)
     .attr('fill', '#ffffff').attr('stroke', '#5a7adc').attr('stroke-width', 2);
 
   nodeEl.filter(d => !!logos[d.id])
     .append('image')
     .attr('href', d => logos[d.id])
-    .attr('x', -30).attr('y', -30)
-    .attr('width', 60).attr('height', 60)
+    .attr('x', -logoR).attr('y', -logoR)
+    .attr('width', logoR * 2).attr('height', logoR * 2)
     .attr('clip-path', d => `url(#logo-clip-${d.id})`)
     .style('pointer-events', 'none');
 
