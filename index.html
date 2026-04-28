@@ -76,6 +76,7 @@ layout: null
       {% for node in site.data.graph.nodes %}
       <li>
         <strong>{{ node.label }}</strong>
+        {% for group in site.data.graph.groups %}{% if group.members contains node.id %} ({{ group.label }}){% endif %}{% endfor %}
         {% assign outgoing = site.data.graph.edges | where: "source", node.id %}
         {% if outgoing.size > 0 %} — connects to:
           {% for edge in outgoing %}{% assign tgt = site.data.graph.nodes | where: "id", edge.target | first %}{{ tgt.label }}{% unless forloop.last %}, {% endunless %}{% endfor %}
