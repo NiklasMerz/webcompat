@@ -61,6 +61,10 @@ nodes:
     label: Mozilla Standards Positions
   - id: WebKitPositions
     label: WebKit Standards Positions
+  - id: ARIAT
+    label: ARIA-AT
+  - id: a11ysupport
+    label: a11ysupport.io
 
 edges:
   - source: bcdresults
@@ -159,6 +163,10 @@ edges:
     target: MozillaBugs
   - source: WebKitPositions
     target: WebKitBugs
+  - source: ARIAT
+    target: ACD
+  - source: a11ysupport
+    target: ACD
 
 groups:
   - id: Tools
@@ -169,4 +177,4 @@ groups:
     members: [BCD, bcdresults, WebFeatures, webfeatures-package, Baseline, ACD, DevSignals, webref, browser-specs, specref]
   - id: Websites
     label: Websites
-    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, WebCompat, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromiumBugs, WebKitBugs, MozillaBugs, ChromeStatus, MozillaPositions, WebKitPositions]
+    members: [MDN, CanIUse, CanIEmail, CanIWebView, WebStatus, WebCompat, Interop, StateOfJS, StateOfCSS, StateOfHTML, ChromiumBugs, WebKitBugs, MozillaBugs, ChromeStatus, MozillaPositions, WebKitPositions, ARIAT, a11ysupport]
