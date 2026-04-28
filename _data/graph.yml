@@ -35,6 +35,14 @@ nodes:
     label: baseline-browser-mapping
   - id: Interop
     label: Interop
+  - id: webref
+    label: Webref
+  - id: browser-specs
+    label: browser-specs
+  - id: reffy
+    label: Reffy
+  - id: specref
+    label: Specref
 
 edges:
   - source: bcdresults
@@ -86,4 +94,20 @@ edges:
   - source: Interop
     target: WebStatus
   - source: Interop
+    target: WebFeatures
+  - source: specref
+    target: browser-specs
+  - source: browser-specs
+    target: reffy
+  - source: reffy
+    target: webref
+  - source: webref
+    target: MDN
+  - source: webref
+    target: WPT
+  - source: webref
+    target: BCDCollector
+  - source: webref
+    target: BCD
+  - source: webref
     target: WebFeatures
