@@ -1,8 +1,8 @@
 ---
 node_id: Baseline
 title: Baseline
-link: https://web.dev/baseline
-maintainer: Google, with cross-vendor input
+link: https://web-platform-dx.github.io/web-features/
+maintainer: W3C WebDX Community Group
 logo: /assets/img/logos/baseline-widely-icon.png
 ---
 
@@ -16,8 +16,8 @@ Web developers who want a simple signal for feature readiness without having to 
 
 ## Where to find it
 
-[web.dev/baseline](https://web.dev/baseline) for the definition and dashboard. Baseline status is surfaced on MDN, web.dev, and CanIUse.
+[https://web-platform-dx.github.io/web-features/](https://web-platform-dx.github.io/web-features/) for more information. Baseline status is surfaced on MDN, web.dev, and CanIUse and more.
 
 ## Who is maintaining it
 
-Originally driven by Google Chrome, now defined collaboratively through the web-platform-dx working group with input from Mozilla, Apple, and Microsoft.
+Originally driven by Google Chrome, now defined collaboratively through the WebDX Community Group with input from Mozilla, Apple, and Microsoft.
