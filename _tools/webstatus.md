@@ -2,7 +2,7 @@
 node_id: WebStatus
 title: webstatus.dev
 link: https://webstatus.dev
-maintainer: Google / web-platform-dx
+maintainer: Google
 logo: /assets/img/logos/fyi.svg
 ---
 
@@ -20,4 +20,4 @@ Web developers tracking when a feature reaches Baseline, browser engineers monit
 
 ## Who is maintaining it
 
-Maintained by Google as part of the web-platform-dx organisation, the same group that stewards the web-features repository and the Baseline definition.
+Maintained by Google.
