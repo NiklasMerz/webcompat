@@ -3,7 +3,7 @@ node_id: StateOfHTML
 title: State of HTML
 link: https://stateofhtml.com
 maintainer: Devographics
-logo: /assets/img/logos/devographics.png
+logo: /assets/img/logos/stateofhtml.png
 ---
 
 ## What it does

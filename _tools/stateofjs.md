@@ -3,7 +3,7 @@ node_id: StateOfJS
 title: State of JavaScript
 link: https://stateofjs.com
 maintainer: Devographics
-logo: /assets/img/logos/devographics.png
+logo: /assets/img/logos/stateofjs.png
 ---
 
 ## What it does
