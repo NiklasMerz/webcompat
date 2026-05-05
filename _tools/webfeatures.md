@@ -2,7 +2,7 @@
 node_id: WebFeatures
 title: Web Features
 link: https://web-platform-dx.github.io/web-features-project/
-maintainer: web-platform-dx working group
+maintainer: WebDX Community Group
 logo: /assets/img/logos/webdx-notext.svg
 ---
 
@@ -22,4 +22,4 @@ The npm package `web-features` exposes the data for programmatic use.
 
 ## Who is maintaining it
 
-The [web-platform-dx](https://github.com/web-platform-dx) working group, a cross-vendor effort involving Google, Mozilla, Apple, Microsoft, and others.
+The [WebDX Community Group](https://www.w3.org/community/webdx/), a cross-vendor effort involving Google, Mozilla, Apple, Microsoft, and others.
