@@ -103,6 +103,8 @@ edges:
     target: CanIEmail
   - source: WebFeatures
     target: MDN
+  - source: WebFeatures
+    target: WPT
   - source: WebCompat
     target: DevSignals
   - source: Baseline
