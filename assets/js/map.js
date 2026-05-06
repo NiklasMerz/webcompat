@@ -195,7 +195,7 @@
   // Logo nodes
   nodeEl.filter(d => !!logos[d.id])
     .append('circle').attr('r', logoR)
-    .attr('fill', '#ffffff').attr('stroke', '#5a7adc').attr('stroke-width', 2);
+    .attr('fill', d => tools[d.id]?.logo_bg ?? '#ffffff').attr('stroke', '#5a7adc').attr('stroke-width', 2);
 
   nodeEl.filter(d => !!logos[d.id])
     .append('image')
