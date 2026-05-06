@@ -1,7 +1,7 @@
 ---
 node_id: Baseline
 title: Baseline
-link: https://web-platform-dx.github.io/web-features/
+link: https://web-platform-dx.github.io/baseline/
 maintainer: W3C WebDX Community Group
 logo: /assets/img/logos/baseline-widely-icon.png
 ---

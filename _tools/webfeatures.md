@@ -1,8 +1,9 @@
 ---
 node_id: WebFeatures
 title: Web Features
-link: https://github.com/web-platform-dx/web-features
+link: https://web-platform-dx.github.io/web-features-project/
 maintainer: web-platform-dx working group
+logo: /assets/img/logos/webdx.svg
 ---
 
 ## What it does
