@@ -3,8 +3,7 @@ node_id: WebFeatures
 title: Web Features
 link: https://web-platform-dx.github.io/web-features-project/
 maintainer: web-platform-dx working group
-logo: /assets/img/logos/webdx.svg
-logo_bg: "#1e2538"
+logo: /assets/img/logos/webdx-notext.svg
 ---
 
 ## What it does
