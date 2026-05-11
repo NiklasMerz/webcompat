@@ -6,6 +6,7 @@ layout: null
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <title>{{ site.title }}</title>
   <meta name="description" content="{{ site.description }}">
 
@@ -25,11 +26,19 @@ layout: null
 
   <link rel="canonical" href="{{ site.url }}">
   <link rel="stylesheet" href="/assets/css/style.css">
-  <script>
-    const stored = localStorage.getItem('theme');
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-    if (stored === 'light' || (!stored && prefersLight)) document.documentElement.classList.add('light');
-  </script>
+    <script>
+      const stored = localStorage.getItem("theme");
+      const lightmode = window.matchMedia("(prefers-color-scheme: light)");
+      const prefersLight = lightmode.matches;
+
+      if (stored === "light" || (!stored && prefersLight)) document.documentElement.classList.add("light");
+
+      lightmode.addEventListener("change", (e) => {
+        if (!localStorage.getItem("theme")) {
+          document.documentElement.classList.toggle("light", e.matches);
+        }
+      });
+    </script>
 </head>
 <body>
   <header id="site-header">
