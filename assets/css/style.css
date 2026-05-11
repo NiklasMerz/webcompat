@@ -163,6 +163,11 @@ html.light .hull-group-Websites .hull-label { fill: #108850; }
   transform: translateX(0);
 }
 
+#panel-content {
+  height: 100%;
+  overflow: auto;
+}
+
 #panel-close {
   position: absolute;
   top: 0.9rem;
@@ -406,6 +411,10 @@ html.light .node-tooltip {
 
   #tool-panel.open {
     transform: translateY(0);
+  }
+
+  #panel-content {
+    height: 50vh;
   }
 
   #site-footer {
