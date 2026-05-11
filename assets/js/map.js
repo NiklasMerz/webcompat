@@ -162,7 +162,7 @@
   let svgDragged = false;
   svg.on('pointerdown', () => { svgDragged = false; })
      .on('pointermove', e => { if (e.buttons > 0) svgDragged = true; })
-     .on('click', () => { if (!svgDragged) closePanel(); });
+     .on('click', () => { if (!svgDragged) { clearTool(); closePanel(); } });
 
   // Pinch-to-zoom and pan
   const zoom = d3.zoom()
@@ -240,13 +240,42 @@
   const panelMeta = document.getElementById('panel-meta');
   const panelEdit = document.getElementById('panel-edit');
   const panelBody = document.getElementById('panel-body');
+  const baseTitle = document.title;
   let lastFocused = null;
 
+  // Open/close panel based on URL param 
+  function syncPanelFromURL() {
+    const toolParam = new URL(location.href).searchParams.get('tool');
+    if (toolParam) {
+      const match = nodes.find(n => n.id === toolParam);
+      if (match) { highlight(match); openPanel(match); }
+    } else {
+      closePanel();
+    }
+  }
+
+  function pushTool(id) {
+    const url = new URL(location.href);
+    url.searchParams.set('tool', id);
+    history.pushState(null, '', url);
+  }
+
+  function clearTool() {
+    const url = new URL(location.href);
+    url.searchParams.delete('tool');
+    history.pushState(null, '', url);
+  }
+
+  window.addEventListener('popstate', syncPanelFromURL);
+  syncPanelFromURL();
+  
   function openPanel(d) {
     lastFocused = document.activeElement;
     const data = tools[d.id];
+    const title = data?.name ?? d.label;
 
-    panelTitle.textContent = data?.name ?? d.label;
+    panelTitle.textContent = title;
+    document.title = `${title} — ${baseTitle}`;
 
     panelMeta.innerHTML = [
       data?.link ? `<a href="${data.link}" target="_blank" rel="noopener noreferrer">${data.link}</a>` : '',
@@ -273,12 +302,19 @@
     panel.setAttribute('aria-hidden', 'true');
     clearHighlight();
     if (lastFocused) lastFocused.focus();
+    document.title = baseTitle;
   }
 
-  document.getElementById('panel-close').addEventListener('click', closePanel);
+  document.getElementById('panel-close').addEventListener('click', () => {
+    clearTool();
+    closePanel();
+  });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closePanel();
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      clearTool();
+      closePanel();
+    }
   });
 
   // Trap focus inside panel when open
@@ -297,7 +333,12 @@
   const tooltip = d3.select('body').append('div').attr('class', 'node-tooltip').style('display', 'none');
 
   nodeEl
-    .on('click', (e, d) => { e.stopPropagation(); highlight(d); openPanel(d); })
+    .on('click', (e, d) => {
+      e.stopPropagation();
+      highlight(d);
+      pushTool(d.id);
+      openPanel(d);
+    })
     .on('mouseenter', (e, d) => { highlight(d); tooltip.style('display', 'block').text(d.label); })
     .on('mousemove', e => tooltip.style('left', (e.clientX + 14) + 'px').style('top', (e.clientY - 28) + 'px'))
     .on('mouseleave', () => { if (!panel.classList.contains('open')) clearHighlight(); tooltip.style('display', 'none'); })
@@ -307,8 +348,10 @@
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         highlight(d);
+        pushTool(d.id);
         openPanel(d);
       } else if (e.key === 'Escape') {
+        clearTool();
         closePanel();
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault();
